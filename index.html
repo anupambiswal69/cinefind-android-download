@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#080a0c" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="CINEFIND" />
+    <meta
+      name="description"
+      content="Find the movie or series behind a scene with CINEFIND."
+    />
+    <title>CINEFIND — Find the movie behind the moment</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="app-config.js" defer></script>
+    <script src="pwa.js" defer></script>
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="#top" aria-label="CINEFIND home">
+          <span class="brand-mark" aria-hidden="true"><span></span></span>
+          <span class="brand-name">CINEFIND</span>
+        </a>
+        <div class="topbar-meta">
+          <span class="live-dot" aria-hidden="true"></span>
+          <span>SCENE DESK</span>
+          <span class="topbar-divider" aria-hidden="true"></span>
+          <span class="edition">WEB / 01</span>
+        </div>
+      </header>
+
+      <main id="top">
+        <div class="search-layout">
+          <section class="intake" id="scene-intake" aria-labelledby="page-title">
+            <p class="eyebrow"><span>01</span> &nbsp; SCENE SEARCH</p>
+            <h1 id="page-title">That scene.<br />What was it <span>from?</span></h1>
+            <p class="intro">
+              A link, a clip, or a single frame. Start with the moment you remember.
+            </p>
+
+            <form id="search-form" novalidate>
+              <div class="mode-switch" role="tablist" aria-label="Choose what to submit">
+                <button class="mode-tab is-active" id="tab-link" type="button" role="tab" aria-selected="true" aria-controls="link-panel" data-mode="link">
+                  <span class="tab-index">A</span> Link
+                </button>
+                <button class="mode-tab" id="tab-video" type="button" role="tab" aria-selected="false" aria-controls="video-panel" data-mode="video" tabindex="-1">
+                  <span class="tab-index">B</span> Video
+                </button>
+                <button class="mode-tab" id="tab-image" type="button" role="tab" aria-selected="false" aria-controls="image-panel" data-mode="image" tabindex="-1">
+                  <span class="tab-index">C</span> Screenshot
+                </button>
+              </div>
+
+              <div class="mode-panel" id="link-panel" role="tabpanel" aria-labelledby="tab-link">
+                <label class="field-label" for="scene-url">PASTE A SOCIAL VIDEO LINK</label>
+                <div class="url-field">
+                  <span class="url-prefix" aria-hidden="true">↗</span>
+                  <input
+                    id="scene-url"
+                    name="scene-url"
+                    type="url"
+                    autocomplete="url"
+                    placeholder="instagram.com/reel/… or youtube.com/…"
+                    aria-describedby="link-hint"
+                    required
+                  />
+                  <button class="field-clear" id="clear-url" type="button" aria-label="Clear link" title="Clear link" hidden>×</button>
+                </div>
+                <p class="field-hint" id="link-hint">Instagram Reels and YouTube videos or Shorts</p>
+              </div>
+
+              <div class="mode-panel" id="video-panel" role="tabpanel" aria-labelledby="tab-video" hidden>
+                <span class="field-label">CHOOSE A VIDEO CLIP</span>
+                <label class="drop-zone" id="video-drop-zone" for="video-file">
+                  <span class="drop-symbol" aria-hidden="true">↑</span>
+                  <span class="drop-main">Drop a clip or <strong>browse files</strong></span>
+                  <span class="drop-meta">MP4, MOV, WEBM · up to 100 MB</span>
+                  <input class="visually-hidden" id="video-file" name="video-file" type="file" accept="video/mp4,video/quicktime,video/webm,.mp4,.mov,.webm" />
+                </label>
+                <div class="selected-file" id="video-selection" hidden></div>
+              </div>
+
+              <div class="mode-panel" id="image-panel" role="tabpanel" aria-labelledby="tab-image" hidden>
+                <span class="field-label">CHOOSE A SCREENSHOT</span>
+                <label class="drop-zone" id="image-drop-zone" for="image-file">
+                  <span class="drop-symbol" aria-hidden="true">↑</span>
+                  <span class="drop-main">Drop a still or <strong>browse files</strong></span>
+                  <span class="drop-meta">JPG, PNG, WEBP · up to 15 MB</span>
+                  <input class="visually-hidden" id="image-file" name="image-file" type="file" accept="image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp" />
+                </label>
+                <div class="selected-file" id="image-selection" hidden></div>
+              </div>
+
+              <div class="submit-row">
+                <button class="submit-button" type="submit">
+                  <span>Check this scene</span>
+                  <span class="submit-arrow" aria-hidden="true">↗</span>
+                </button>
+                <span class="privacy-note">Your files stay on this device for now.</span>
+              </div>
+              <p class="feedback" id="feedback" role="status" aria-live="polite" hidden></p>
+            </form>
+          </section>
+
+          <section class="scene-feature" aria-label="CINEFIND scene search">
+            <div class="scene-image">
+              <img
+                src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&amp;fit=crop&amp;w=1400&amp;q=85"
+                alt="Rows of seats in a dark cinema"
+                fetchpriority="high"
+              />
+              <div class="image-shade" aria-hidden="true"></div>
+              <div class="image-topline">
+                <span>FRAME / 001</span>
+                <span>SEARCH THE SCREEN</span>
+              </div>
+              <div class="feature-copy">
+                <span class="feature-rule" aria-hidden="true"></span>
+                <p class="feature-kicker">FIND THE MOVIE BEHIND THE MOMENT</p>
+                <h2>Every frame<br />has a <em>story.</em></h2>
+              </div>
+              <div class="image-caption">
+                <span>THE FIRST CLUE IS YOURS</span>
+                <span class="caption-mark" aria-hidden="true">C / F</span>
+              </div>
+            </div>
+            <div class="service-status">
+              <div>
+                <span class="status-label">IDENTIFICATION SERVICE</span>
+                <p id="source-summary">Waiting for your first scene</p>
+              </div>
+              <span class="status-badge"><span aria-hidden="true"></span> SETUP IN PROGRESS</span>
+            </div>
+          </section>
+        </div>
+
+        <section class="title-finder" id="title-finder" aria-labelledby="finder-title">
+          <div class="finder-heading">
+            <div>
+              <p class="eyebrow"><span>02</span> &nbsp; MOVIE CATALOG</p>
+              <h2 id="finder-title">Know part of the title?</h2>
+              <p class="finder-intro">Search movies and series, then see where they are legally available.</p>
+            </div>
+            <label class="region-field" for="watch-region">
+              <span>YOUR REGION</span>
+              <select id="watch-region" name="region">
+                <option value="US">United States</option>
+                <option value="GB">United Kingdom</option>
+                <option value="CA">Canada</option>
+                <option value="AU">Australia</option>
+                <option value="IN">India</option>
+              </select>
+            </label>
+          </div>
+          <form class="movie-search" id="movie-search-form">
+            <label class="visually-hidden" for="movie-query">Movie or series title</label>
+            <span class="movie-search-icon" aria-hidden="true">⌕</span>
+            <input id="movie-query" name="query" type="search" minlength="2" maxlength="100" placeholder="Search by movie or series title" required />
+            <button type="submit"><span>Find title</span><span aria-hidden="true">↗</span></button>
+          </form>
+          <p class="catalog-status" id="catalog-status" role="status" aria-live="polite">Search the catalog by title to see matches.</p>
+          <div class="movie-results" id="movie-results" aria-live="polite"></div>
+          <p class="legal-note">CINEFIND does not host movie files. Watch options open licensed streaming, rental, or purchase listings for your region.</p>
+        </section>
+
+        <section class="history" id="history" aria-labelledby="history-title">
+          <div class="history-heading">
+            <div>
+              <p class="eyebrow"><span>03</span> &nbsp; YOUR DESK</p>
+              <h2 id="history-title">Recent submissions</h2>
+            </div>
+            <button class="clear-history" id="clear-history" type="button" hidden>Clear history <span aria-hidden="true">×</span></button>
+          </div>
+          <ul class="history-list" id="history-list" aria-live="polite">
+            <li class="history-empty">Your checked links and selected files will appear here.</li>
+          </ul>
+        </section>
+      </main>
+
+      <dialog class="movie-dialog" id="movie-dialog" aria-labelledby="movie-dialog-title">
+        <button class="dialog-close" id="close-movie-dialog" type="button" aria-label="Close movie details">×</button>
+        <div class="dialog-content" id="dialog-content"></div>
+      </dialog>
+
+      <footer class="footer">
+        <span>CINEFIND <span class="footer-dot">/</span> FIND THE MOVIE BEHIND THE MOMENT</span>
+        <span>INITIAL BUILD <span class="footer-dot">·</span> 2026</span>
+      </footer>
+    </div>
+    <nav class="mobile-dock" aria-label="Primary navigation">
+      <a href="#scene-intake"><span aria-hidden="true">⌁</span> Scene</a>
+      <a href="#title-finder"><span aria-hidden="true">⌕</span> Movies</a>
+      <a href="#history"><span aria-hidden="true">▤</span> History</a>
+    </nav>
+  </body>
+</html>

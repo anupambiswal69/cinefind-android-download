@@ -1,0 +1,1 @@
+window.CINEFIND_API_BASE = "";
